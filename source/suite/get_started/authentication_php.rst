@@ -28,7 +28,7 @@ PHP
     *   an ISO 8601 date string like '2010-12-31T15:30:59+00:00' or '2010-12-31T15:30:59Z'
     * passwordDigest looks sg like 'MDBhOTMwZGE0OTMxMjJlODAyNmE1ZWJhNTdmOTkxOWU4YzNjNWZkMw=='
     */
-   $nonce = 'd36e316282959a9ed4c89851497a717f';
+   $nonce = base64_encode(openssl_random_pseudo_bytes(16));
    $timestamp = gmdate("c");
    $passwordDigest = base64_encode(sha1($nonce . $timestamp . $secret, false));
    curl_setopt($ch,CURLOPT_HTTPHEADER, array("X-WSSE: UsernameToken ".
@@ -41,4 +41,3 @@ PHP
    curl_close($ch);
 
    echo $output;
-   ?>
